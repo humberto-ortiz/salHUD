@@ -12,7 +12,7 @@ biocLite("sp")
 library(sp)
 
 # just the coastline
-load("PRI_adm0.RData")
+#load("PRI_adm0.RData")
 
 # loads a "gadm" object
 
