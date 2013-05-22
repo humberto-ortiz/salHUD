@@ -7,8 +7,8 @@
 # http://blog.revolutionanalytics.com/2009/10/geographic-maps-in-r.html
 
 # need sp
-source("http://www.bioconductor.org/biocLite.R")
-biocLite("sp")
+#source("http://www.bioconductor.org/biocLite.R")
+#biocLite("sp")
 library(sp)
 
 # just the coastline
@@ -22,7 +22,7 @@ library(sp)
 # http://www.filefactory.com/file/36b452f0rlrz/n/PRI_adm1_RData
 load("PRI_adm1.RData")
 names(gadm)
-spplot(gadm, "ID_1")
+#spplot(gadm, "ID_1")
 
 gadm$NAME_1
 
@@ -88,4 +88,6 @@ gadm$ypll <- ypll$V2
 # colours <- heat.colors(6)
 # brks<-classIntervals(gadm$ypll, n=6, style="pretty")
 
+png(filename="ypll-2008.png")
 spplot(gadm, "ypll")
+dev.off()
