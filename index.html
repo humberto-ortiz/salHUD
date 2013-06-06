@@ -1,0 +1,104 @@
+
+<!DOCTYPE html>
+<meta charset="utf-8">
+<script src="./js/lib/d3.js"></script>
+<script src="./js/lib/klass.js"></script>
+<script src="./js/atlaspr.js"></script>
+<body>
+<center>
+  <H1>Years of Potential Life Lost, Puerto Rico 2008</h1>
+</center>
+<div id = 'map'></div>
+  <script type = 'text/javascript'>
+
+function dibujalo(p1) {
+  var my_node = document.getElementById("map");
+  my_node.innerHTML = "";
+  var datamap = {};
+  var map;
+  d3.json("all-causes.json", function(data){
+    data.forEach(function(pueblo){
+      var fips_3digits = pueblo.fips.length == 1 ? ("00" + pueblo.fips) : 
+      (pueblo.fips.length == 2 ? ("0" + pueblo.fips) : pueblo.fips);
+      // select which cause of death to plot
+      var rv ;
+      switch(Number(p1)) {
+        case 1: rv = pueblo.ypll; break;
+        case 2: rv = pueblo.cardio; break;
+        case 3: rv = pueblo.tumor; break;
+        case 4: rv = pueblo.diabetes; break;
+        case 5: rv = pueblo.alzheimer; break;
+        case 6: rv = pueblo.cerebrovascular; break;
+        case 7: rv = pueblo.respiratory; break;
+        case 8: rv = pueblo.accident; break;
+        case 9: rv = pueblo.nefritis; break;
+        case 10: rv = pueblo.homicide; break;
+        case 11: rv = pueblo.pneumonia; break;
+        // default : rv = pueblo.ypll; 
+       }
+       datamap[fips_3digits] = rv;
+    });
+  // 
+    map = new AtlasPR({
+      node: my_node,
+      tiles: 'pueblos',
+      size: "large",
+      on_ready: function(){
+        map.encode_quan(datamap);
+      },
+      events: {on_click: function(feature,
+  svg_path){alert(feature.properties.NAME + "\n" + Math.floor(datamap[feature.properties.COUNTY]) );}}
+  });});
+}
+  </script>
+  <script language="JavaScript">
+   function causasMan(p1) {
+      dibujalo(p1.value);
+      handleOracion(p1.value);
+   }
+   function handleOracion(num) {
+       var oracion = document.getElementById("oracion_");
+       var rv = new String();
+       switch(Number(num)) {
+        case 1: rv = "For All Causes of Death"; break;
+        case 2: rv = "For Heart Disease"; break;
+        case 3: rv = "For Cancer"; break;
+        case 4: rv = "For Diabetes"; break;
+        case 5: rv = "For Alzheimer's Disease"; break;
+        case 6: rv = "For Cerebrovascular Disease"; break;
+        case 7: rv = "For Chronic Lower Airway Respiratory Disease"; break;
+        case 8: rv = "For Unintentional Injuries"; break;
+        case 9: rv = "For Renal Disease"; break;
+        case 10: rv = "For Homicide"; break;
+        case 11: rv = "For Pneumonia and Influenza"; break; 
+       }
+       oracion.innerHTML="<h3>" + rv + "</h3>" ;
+   }
+
+</script>
+
+<table border=0><tr><td>
+<select name="causas" onchange="causasMan(this)">
+ <option value="1">ypll</option>
+ <option value="2">cardio</option>
+ <option value="3">tumor</option>
+ <option value="4">diabetes</option>
+ <option value="5">alzheimer</option>
+ <option value="6">cerebrovascular</option>
+ <option value="7">respiratory</option>
+ <option value="8">accident</option>
+ <option value="9">nefritis</option>
+ <option value="10">homicide</option>
+ <option value="11">pneumonia</option>
+ </select>
+</table>
+<div id="oracion_">
+  For all Causes of Death
+</div>
+<script languange="javascript">
+     dibujalo(1);
+     handleOracion(1);
+</script>
+</body>
+  </html>
+
