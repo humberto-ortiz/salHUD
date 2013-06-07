@@ -1,7 +1,24 @@
 # basic-death.py - Parse basic death data from instituto de estadisticas
-# Copyright 2013 - Humberto Ortiz-Zuazaga
-# GPL v3
+# Copyright 2013 - Humberto Ortiz-Zuazaga <humberto.ortiz@upr.edu>
 
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# Data files available from Instituto de Estadisticas de Puerto Rico
+# http://www.estadisticas.gobierno.pr/iepr/Estadisticas/Basesdedatos/Salud.aspx#CDC_mort_ba
+    
+# Data dictionary http://www.estadisticas.gobierno.pr/iepr/LinkClick.aspx?fileticket=FwwQOEgXp1s%3d&tabid=95
+    
 # age at death
 # ageunits
 # 0 menos de 100
@@ -91,7 +108,7 @@ for line in fileinput.input():
     #print icd, 
     m = reg_exp.search(icd)
     if m:
-	cause = m.lastgroup # prints the name of the group that matched
+	cause = m.lastgroup # the name of the group that matched
     else:
         cause = "other"
 
@@ -103,7 +120,8 @@ for line in fileinput.input():
         bycounty[municipio] += ypll(age(fields[unitidx], fields[numbidx]))
         bydeath[municipio][cause] += ypll(age(fields[unitidx], fields[numbidx]))
     
-
+#
+# output to json for plotting with atlaspr
 import json
 
 data = []
@@ -113,18 +131,3 @@ for county in bycounty.keys():
     data[-1]["ypll"] = bycounty[county]
     
 print json.dumps(data)
-
-#print "# municipio total",
-
-#for cause in  causes:
-#    print cause,
-#
-#print
-#
-#for county in bycounty.keys():
-#    print county, bycounty[county],
-#
-#    for cause in causes:
-#	print bydeath[county][cause],
-#
-#    print

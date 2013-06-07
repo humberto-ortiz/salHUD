@@ -1,12 +1,23 @@
-
-<!DOCTYPE html>
-<meta charset="utf-8">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+        "http://www.w3.org/TR/html4/strict.dtd">
+<HTML>
+<HEAD>
+<meta name="author" content="Roberto Arce Corretjer, Jose Conde,
+        Humberto Ortiz-Zuazaga, Juan Sola Sloan">
+<META  name="description" content="Demo public health heads-up display">
+<TITLE>salHUD</TITLE>
+<meta http-equiv="Content-Type" content="text/html;
+        charset=utf-8">
 <script src="./js/lib/d3.js"></script>
 <script src="./js/lib/klass.js"></script>
 <script src="./js/atlaspr.js"></script>
+</head>
 <body>
 <center>
   <H1>Years of Potential Life Lost, Puerto Rico 2008</h1>
+<div id="oracion_">
+  For all Causes of Death
+</div>
 </center>
 <div id = 'map'></div>
   <script type = 'text/javascript'>
@@ -34,6 +45,7 @@ function dibujalo(p1) {
         case 9: rv = pueblo.nefritis; break;
         case 10: rv = pueblo.homicide; break;
         case 11: rv = pueblo.pneumonia; break;
+        case 12: rv = pueblo.other; break;
         // default : rv = pueblo.ypll; 
        }
        datamap[fips_3digits] = rv;
@@ -71,6 +83,7 @@ function dibujalo(p1) {
         case 9: rv = "For Renal Disease"; break;
         case 10: rv = "For Homicide"; break;
         case 11: rv = "For Pneumonia and Influenza"; break; 
+        case 12: rv = "For Other Causes"; break; 
        }
        oracion.innerHTML="<h3>" + rv + "</h3>" ;
    }
@@ -79,26 +92,44 @@ function dibujalo(p1) {
 
 <table border=0><tr><td>
 <select name="causas" onchange="causasMan(this)">
- <option value="1">ypll</option>
- <option value="2">cardio</option>
- <option value="3">tumor</option>
- <option value="4">diabetes</option>
- <option value="5">alzheimer</option>
- <option value="6">cerebrovascular</option>
- <option value="7">respiratory</option>
- <option value="8">accident</option>
- <option value="9">nefritis</option>
- <option value="10">homicide</option>
- <option value="11">pneumonia</option>
+ <option value="1">All Causes of Death</option>
+ <option value="2">Heart Disease</option>
+ <option value="3">Cancer</option>
+ <option value="4">Diabetes</option>
+ <option value="5">Alzheimer's Disease</option>
+ <option value="6">Cerebrovascular Disease</option>
+ <option value="7">Chronic Lower Airway Respiratory Disease</option>
+ <option value="8">Unintentional Injuries</option>
+ <option value="9">Renal Disease</option>
+ <option value="10">Homicide</option>
+ <option value="11">Pneumonia and Influenza</option>
+ <option value="12">Other Causes</option>
  </select>
 </table>
-<div id="oracion_">
-  For all Causes of Death
-</div>
 <script languange="javascript">
      dibujalo(1);
      handleOracion(1);
 </script>
+<p>Demo of salHUD, a heads-up display for public health data. Click on
+a municipality to display the Years of Potential Life Lost (YPLL) due to
+premature death among the residents of the indicated municipality by
+the selected cause of death.
+</p>
+
+<p>Full source code for the demo is available <a
+ href="https://github.com/humberto-ortiz/salHUD">on github</a>.  </p>
+
+<p>The salHUD demo is a collaboration between hackers from three <a
+ href="http://www.upr.edu/">UPR</a> campuses for the <a
+ href="https://www.hackerleague.org/hackathons/puerto-rico-tech-summit-hackathon">Puerto
+Rico Tech Summit Hackathon</a>. Participants are:
+<ul>
+  <li><p>Roberto Arce Corretjer - <a href="http://www.uprrp.edu/">UPR-RRP</a></p></li>
+  <li><p>Jos&eacute; Conde - <a href="http://www.rcm.upr.edu/">UPR-RCM</a></p></li>
+  <li><p>Humberto Ortiz-Zuazaga - <a href="http://www.uprrp.edu/">UPR-RRP</a></p></li>
+  <li><p>Juan Sol&aacute; Sloan - <a href="http://www.uprb.edu/">UPR-Bayamon</a></p></li>
+</ul>
+</p>
 </body>
   </html>
 
